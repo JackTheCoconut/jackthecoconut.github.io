@@ -1,0 +1,42 @@
+name: Deploy to GitHub Pages
+
+# 觸發條件：每次 push 到 main 分支時執行
+on:
+  push:
+    branches:
+      - main
+
+# 定義工作流程中的任務
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 檢出代碼
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. 設置 Node.js 環境
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      # 3. 安裝依賴
+      - name: Install dependencies
+        run: npm install
+
+      # 4. 編譯 TypeScript
+      - name: Build TypeScript
+        run: npx tsc
+
+      # 5. 複製 public 資料夾到 dist
+      - name: Copy public files
+        run: cp -r public/* dist/
+
+      # 6. 部署到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
