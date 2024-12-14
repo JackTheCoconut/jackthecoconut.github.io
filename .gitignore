@@ -15,3 +15,9 @@ yarn-error.log*
 dist/
 
 .DS_Store
+
+node_modules/
+src/
+tailwind.config.js
+package.json
+package-lock.json
