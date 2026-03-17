@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "build:css": "npx tailwindcss -i ./src/styles.css -o ./dist/output.css --minify"
+    "build:css": "npx tailwindcss -i ./src/styles.css -o ./dist/output.css --minify",
+    "build:site": "npm run build && cp -r public/* dist/"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
