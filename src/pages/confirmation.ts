@@ -12,11 +12,12 @@ app.innerHTML = `
       <div class="mt-4 space-y-2">${T.cartRows().map((r: any) => `<div class="flex justify-between border-b pb-2"><span>${r.activity.title} x ${r.qty}</span><span>${T.money(r.sub)}</span></div>`).join("")}</div>
       <p class="flex justify-between font-bold text-lg mt-4"><span>Total</span><span>${T.money(T.cartTotal())}</span></p>
       <button id="place" class="mt-4 bg-emerald-600 text-white px-4 py-2 rounded-lg">Place order</button>
-      <button data-route="cart" class="mt-2 ml-2 border px-4 py-2 rounded-lg">Back to cart</button>
     </section>
   </main>
   ${T.footer}
 `;
 
-T.bindRouteLinks();
-document.querySelector<HTMLButtonElement>("#place")?.addEventListener("click", () => { T.setCart([]); T.go("success"); });
+document.querySelector<HTMLButtonElement>("#place")?.addEventListener("click", () => {
+  T.setCart([]);
+  window.location.href = "./success.html";
+});

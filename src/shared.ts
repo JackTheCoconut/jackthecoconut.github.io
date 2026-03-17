@@ -16,29 +16,6 @@ type Activity = {
 
 type CartItem = { activityId: number; qty: number };
 
-type RouteName =
-  | "home"
-  | "activities"
-  | "destinations"
-  | "deals"
-  | "login"
-  | "cart"
-  | "payment"
-  | "confirmation"
-  | "success";
-
-const ROUTES: Record<RouteName, string> = {
-  home: "./index.html",
-  activities: "./activities.html",
-  destinations: "./destinations.html",
-  deals: "./deals.html",
-  login: "./login.html",
-  cart: "./cart.html",
-  payment: "./payment.html",
-  confirmation: "./confirmation.html",
-  success: "./success.html"
-};
-
 const activities: Activity[] = [
   { id: 1, title: "Phi Phi Islands Premium Snorkel", city: "Phuket", country: "Thailand", duration: "6h", price: 59, rating: 4.8, category: "Water", image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80", description: "Snorkel in crystal-clear waters with island transfer.", itinerary: ["08:00 Pickup", "09:00 Speedboat", "10:00 Snorkel", "12:00 Lunch", "14:00 Beach", "16:00 Return"] },
   { id: 2, title: "Mt. Batur Sunrise Trek", city: "Bali", country: "Indonesia", duration: "5h", price: 42, rating: 4.7, category: "Nature", image: "https://images.unsplash.com/photo-1464822759844-d150ad6ba46b?auto=format&fit=crop&w=1200&q=80", description: "Guided pre-dawn hike with volcano sunrise.", itinerary: ["02:30 Pickup", "04:00 Trek", "05:45 Sunrise", "06:30 Breakfast", "09:00 Drop-off"] },
@@ -51,23 +28,6 @@ const activities: Activity[] = [
 ];
 
 const STORAGE = { cart: "travel-cart-multi", auth: "travel-auth-multi" };
-
-const go = (route: RouteName): void => {
-  window.location.href = ROUTES[route];
-};
-
-const goDetail = (id: number): void => {
-  window.location.href = `./activity-detail.html?id=${id}`;
-};
-
-const bindRouteLinks = (root: ParentNode = document): void => {
-  root.querySelectorAll<HTMLElement>("[data-route]").forEach((node) => {
-    node.addEventListener("click", () => {
-      const route = node.dataset.route as RouteName | undefined;
-      if (route) go(route);
-    });
-  });
-};
 
 const getCart = (): CartItem[] => JSON.parse(localStorage.getItem(STORAGE.cart) ?? "[]") as CartItem[];
 const setCart = (cart: CartItem[]): void => localStorage.setItem(STORAGE.cart, JSON.stringify(cart));
@@ -102,14 +62,14 @@ const money = (n: number): string => `$${n.toFixed(2)}`;
 const header = (active: string): string => `
 <div class="bg-slate-900 text-slate-200 text-xs py-2"><div class="max-w-7xl mx-auto px-4 flex justify-between"><p>Marketplace style travel activities</p><p>24/7 Support • Free cancellation</p></div></div>
 <header class="max-w-7xl mx-auto px-4 py-5 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
-  <button data-route="home" class="text-left font-bold text-2xl text-blue-700">Acenda Travel</button>
+  <a href="./index.html" class="font-bold text-2xl text-blue-700">Acenda Travel</a>
   <nav class="flex gap-2 flex-wrap">
-    <button data-route="home" class="px-4 py-2 rounded-full border ${active === "home" ? "bg-blue-600 text-white border-blue-600" : "bg-white border-slate-300"}">Home</button>
-    <button data-route="activities" class="px-4 py-2 rounded-full border ${active === "activities" ? "bg-blue-600 text-white border-blue-600" : "bg-white border-slate-300"}">Activities</button>
-    <button data-route="destinations" class="px-4 py-2 rounded-full border ${active === "destinations" ? "bg-blue-600 text-white border-blue-600" : "bg-white border-slate-300"}">Destinations</button>
-    <button data-route="deals" class="px-4 py-2 rounded-full border ${active === "deals" ? "bg-blue-600 text-white border-blue-600" : "bg-white border-slate-300"}">Deals</button>
-    <button data-route="login" class="px-4 py-2 rounded-full border ${active === "login" ? "bg-blue-600 text-white border-blue-600" : "bg-white border-slate-300"}">Login</button>
-    <button data-route="cart" class="px-4 py-2 rounded-full border ${active === "cart" ? "bg-blue-600 text-white border-blue-600" : "bg-white border-slate-300"}">Cart (${cartQty()})</button>
+    <a href="./index.html" class="px-4 py-2 rounded-full border ${active === "home" ? "bg-blue-600 text-white border-blue-600" : "bg-white border-slate-300"}">Home</a>
+    <a href="./activities.html" class="px-4 py-2 rounded-full border ${active === "activities" ? "bg-blue-600 text-white border-blue-600" : "bg-white border-slate-300"}">Activities</a>
+    <a href="./destinations.html" class="px-4 py-2 rounded-full border ${active === "destinations" ? "bg-blue-600 text-white border-blue-600" : "bg-white border-slate-300"}">Destinations</a>
+    <a href="./deals.html" class="px-4 py-2 rounded-full border ${active === "deals" ? "bg-blue-600 text-white border-blue-600" : "bg-white border-slate-300"}">Deals</a>
+    <a href="./login.html" class="px-4 py-2 rounded-full border ${active === "login" ? "bg-blue-600 text-white border-blue-600" : "bg-white border-slate-300"}">Login</a>
+    <a href="./cart.html" class="px-4 py-2 rounded-full border ${active === "cart" ? "bg-blue-600 text-white border-blue-600" : "bg-white border-slate-300"}">Cart (${cartQty()})</a>
   </nav>
 </header>`;
 
@@ -123,4 +83,4 @@ const footer = `
   </div>
 </footer>`;
 
-(window as any).TravelApp = { activities, getCart, setCart, isLoggedIn, setLoggedIn, addToCart, updateCartQty, cartRows, cartQty, cartTotal, header, footer, money, go, goDetail, bindRouteLinks };
+(window as any).TravelApp = { activities, getCart, setCart, isLoggedIn, setLoggedIn, addToCart, updateCartQty, cartRows, cartQty, cartTotal, header, footer, money };
