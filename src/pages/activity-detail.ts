@@ -18,7 +18,6 @@ app.innerHTML = `
         <p class="text-sm text-slate-600 mt-3">${a.description}</p>
         <p class="mt-4 text-blue-700 text-2xl font-bold">${T.money(a.price)}</p>
         <button id="add" class="mt-4 w-full bg-orange-500 text-white rounded-xl py-2.5 font-semibold">Add to cart</button>
-        <button data-route="activities" class="mt-2 w-full border rounded-xl py-2.5">Back to activities</button>
       </aside>
     </section>
     <section class="bg-white border rounded-2xl p-6 mt-6">
@@ -29,5 +28,7 @@ app.innerHTML = `
   ${T.footer}
 `;
 
-T.bindRouteLinks();
-document.querySelector<HTMLButtonElement>("#add")?.addEventListener("click", () => { T.addToCart(a.id); T.go("cart"); });
+document.querySelector<HTMLButtonElement>("#add")?.addEventListener("click", () => {
+  T.addToCart(a.id);
+  window.location.href = "./cart.html";
+});
